@@ -33,7 +33,7 @@
         }
     </style>
 </head>
-<body>
+<body style="padding: 0px">
     <header>
         My Flask App
     </header>
@@ -45,6 +45,31 @@
     <section>
         <h1>Welcome to My Flask App!</h1>
         <p>This is the home page. Use the navigation links above to visit other pages.</p>
+        <form id="prediction-form">
+            <label for="feature1">Feature 1:</label>
+            <input type="text" id="feature1" name="feature1"><br><br>
+            <label for="feature2">Feature 2:</label>
+            <input type="text" id="feature2" name="feature2"><br><br>
+            <!-- Add more features as needed -->
+            <button type="button" onclick="makePrediction()">Predict</button>
+        </form>
+        <p id="result"></p>
     </section>
+    <script>
+        function makePrediction() {
+            const formData = new FormData(document.getElementById('prediction-form'));
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = `Prediction: ${data.prediction}`;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
