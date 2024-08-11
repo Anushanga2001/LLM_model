@@ -3,56 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            color: #333;
-        }
-        header {
-            background-color: #000000;
-            text-align: center;
-            font-size: 24px;
-            color: white;
-        }
-        nav a {
-            margin: 10px;
-            text-decoration: none;
-            color: #000000;
-        }
-        nav a:hover {
-            color: #000000;
-        }
-        section {
-            margin: 20px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <title>Text Prediction</title>
 </head>
-<body style="padding: 0px">
-    <header>
-        My Flask App
-    </header>
-    <nav>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
-    </nav>
-    <section>
-        <h1>Welcome to My Flask App!</h1>
-        <p>This is the home page. Use the navigation links above to visit other pages.</p>
-        <form id="prediction-form">
-            <label for="feature1">Feature 1:</label>
-            <input type="text" id="feature1" name="feature1"><br><br>
-            <label for="feature2">Feature 2:</label>
-            <input type="text" id="feature2" name="feature2"><br><br>
-            <button type="button" onclick="makePrediction()">Predict</button>
-        </form>
-        <p id="result"></p>
-    </section>
+<body>
+    <h1>Predict the Next Words</h1>
+    <form id="predict-form">
+        <label for="sentence">Enter Sentence:</label>
+        <input type="text" id="sentence" name="sentence" required>
+        <button type="submit">Predict</button>
+    </form>
+    <h2>Prediction:</h2>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('predict-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const sentence = document.getElementById('sentence').value;
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ sentence: sentence })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = data.prediction || data.error;
+            })
+            .catch(error => {
+                document.getElementById('result').innerText = 'An error occurred: ' + error;
+            });
+        });
+    </script>
 </body>
 </html>
