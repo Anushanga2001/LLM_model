@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RNN Model Prediction</title>
+</head>
+<body>
+    <h1>RNN Model Prediction</h1>
+    <form id="predictionForm">
+        <label for="inputData">Input Data (comma-separated values):</label><br>
+        <input type="text" id="inputData" name="inputData" placeholder="1, 2, 3, 4"><br><br>
+        <button type="submit">Predict</button>
+    </form>
+    
+    <h2>Prediction Result:</h2>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+
+            // Get the input data and convert it to an array of numbers
+            let inputData = document.getElementById('inputData').value.split(',').map(Number);
+
+            // Prepare the data to send as JSON
+            let data = {
+                input: [inputData] // Wrapping in another array if your model expects a batch of inputs
+            };
+
+            // Send the data to the Flask app via a POST request
+            fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the prediction result
+                document.getElementById('result').innerText = 'Prediction: ' + data.prediction;
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
