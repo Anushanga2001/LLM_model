@@ -4,6 +4,7 @@ import numpy as np
 import traceback  # Import traceback for detailed error reporting
 
 app = Flask(__name__)
+# get the flask 
 
 # Load the trained model
 try:
