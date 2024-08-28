@@ -9,6 +9,6 @@ This project involves the development of a large language model using Python and
 - **Model Training:** The model is trained using a Recurrent Neural Network (RNN) algorithm, which is well-suited for processing sequential data and understanding the context of words in a sentence.
 - **Prediction:** Once trained, the model can predict subsequent words in a sentence based on a given input word, demonstrating its ability to understand and generate language patterns.
 
-This project showcases my skills in working with large datasets, implementing deep learning algorithms, and building predictive models that can generate meaningful text outputs based on training data.
+This project showcases my skills in working with large datasets, implementing deep learning algorithms, and building predictive models that can generate meaningful text outputs based on training data. continues learning.
 
 ---
